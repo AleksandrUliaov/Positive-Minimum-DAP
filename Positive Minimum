@@ -1,0 +1,52 @@
+public class PosMinimum
+{
+    public static int positiveMinimum( int[] arr, int limit)
+    {
+        if ( limit < 0 || limit >= arr.length )
+        {
+            throw new IllegalArgumentException();
+        }
+        else // 0 <= limit && limit < arr.length
+        {
+           return findingPositive(arr, limit, false, -1);
+        }
+    }
+    
+    public static int findingPositive( int[] arr, int limit, boolean existsPositive, int lastPositive )
+    {
+        if ( limit > 0 )
+        {
+            if ( arr[limit] > 0 )
+            {
+                if ( arr[limit] < findingPositive(arr, limit - 1, true, arr[limit]) )
+                {
+                    return arr[limit];
+                }
+                return findingPositive(arr, limit - 1, true, arr[limit]);
+            }
+            else
+            {
+                if ( existsPositive )
+                {
+                    return findingPositive(arr, limit - 1, true, lastPositive); 
+                }
+                return findingPositive(arr, limit - 1, false, -1); 
+            }
+        }
+        else
+        {
+            if ( arr[0] > 0 )
+            {
+                return arr[0];
+            }
+            else
+            {
+                if ( lastPositive != -1 )
+                {
+                    return lastPositive;
+                }
+                return -1;
+            }
+        }
+    }
+}
